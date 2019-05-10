@@ -16,19 +16,29 @@
 
 package org.jbpm.process.core.validation.impl;
 
+import java.util.Optional;
+
+import org.kie.api.definition.process.Node;
 import org.kie.api.definition.process.Process;
 import org.jbpm.process.core.validation.ProcessValidationError;
 
 public class ProcessValidationErrorImpl implements ProcessValidationError {
 
     private Process process;
+    private Optional<Node> node;
     private String message;
     
     public ProcessValidationErrorImpl(Process process, String message) {
+        this(process, Optional.empty(), message);
+
+    }
+
+    public ProcessValidationErrorImpl(Process process, Optional<Node> node, String message) {
         this.process = process;
+        this.node = node;
         this.message = message;
     }
-    
+
     public String getMessage() {
         return message;
     }
@@ -36,9 +46,12 @@ public class ProcessValidationErrorImpl implements ProcessValidationError {
     public Process getProcess() {
         return process;
     }
-    
+
+    public Optional<Node> getNode() {
+        return node;
+    }
+
     public String toString() {
         return "Process '" + process.getName() + "' [" + process.getId() + "]: " + getMessage();
     }
-
 }

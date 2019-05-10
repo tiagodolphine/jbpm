@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 
 import org.drools.core.time.impl.CronExpression;
@@ -1014,9 +1015,10 @@ public class RuleFlowProcessValidator implements ProcessValidator {
                                    List<ProcessValidationError> errors,
                                    String message) {
         String error = String.format("Node '%s' [%d] " + message,
-                                     node.getName(),
+                                     Optional.ofNullable(node.getName()).orElse(""),
                                      node.getId());
         errors.add(new ProcessValidationErrorImpl(process,
+                                                  Optional.of(node),
                                                   error));
     }
 }
